@@ -73,7 +73,7 @@ const UpComing = () => {
                       <Link to={`comming/${nextMovie.id}`}>
                         <div className="nextMovieBox">
                           <div className="nextMovieImg">
-                            <img src={`https://image.tmdb.org/t/p/w500/${nextMovie.poster_path}`} alt={nextMovie.title} />
+                            <img src={`https://image.tmdb.org/t/p/w1280/${nextMovie.poster_path}`} alt={nextMovie.title} />
                           </div>
                           <div className="nextMovieText">
                             <p>{nextMovie.title}</p>

@@ -14,7 +14,7 @@ const SearchDetail = () => {
   const fetchMovieDetails = async () => {
     try{
       const response= await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=546c72b99cf64514c2c03c7ef473011b&language=ko`)
-      setActors(response.data.cast)
+      setActors(response.data.cast);
       console.log(response.data.cast)
     } catch(error){
       console.error('Error fetching movie details', error)
@@ -52,15 +52,16 @@ const SearchDetail = () => {
           <h3>Actors</h3>
           <ul className="actor-list">
             {
-              actors.slice(0, 6).map((actor)=> (
+              actors.slice(0,12).map((actor)=> (
                 <li key={actor.id} className='actor-item'>
-                  <div className="search-img">
-                    <img src={`${imgPath}${actor.profile_path}`} alt="{actor.name}" />
-                  </div>
-                  <div className="search-info">
-                    <p className="actor-name">{actor.name} {actor.original_name}</p>
-                    <p className="actor-character">{actor.character}</p>
-                  </div>
+                    <div className="search-img">
+                      <img src={`${imgPath}${actor.profile_path}`} alt={actor.name} />
+                    </div>
+                    <div className="search-info">
+                      <p className="actor-name">{actor.name}</p>
+                   
+                      <p className="actor-character">{actor.character}</p>
+                    </div>
                 </li>
               ))
             }

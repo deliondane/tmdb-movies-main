@@ -32,11 +32,11 @@ const MainUpComing = () => {
 				isLoading?(<div className='loding'>로딩중..</div>):(
 					<div className="upMovie">
 						<div className="upComingImg">
-							<img src={`https://image.tmdb.org/t/p/w500/${randomMovie.backdrop_path}`} alt={randomMovie.title} />
+							<img src={`https://image.tmdb.org/t/p/w1280/${randomMovie.backdrop_path}`} alt={randomMovie.title} />
 						</div>
 						<div className="upComingInfo">
 							<div className="upInfoImg">
-								<img src={`https://image.tmdb.org/t/p/w300/${randomMovie.poster_path}`} alt={randomMovie.title} />
+								<img src={`https://image.tmdb.org/t/p/w500/${randomMovie.poster_path}`} alt={randomMovie.title} />
 							</div>
 							<div className="upInfoText">
 								<p className="title">제목 : {randomMovie.title}</p>

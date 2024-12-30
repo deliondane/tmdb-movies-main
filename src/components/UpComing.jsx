@@ -1,43 +1,43 @@
-import React,{useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
-import { Autoplay,  Navigation} from 'swiper/modules';
+import { Link } from 'react-router-dom';
+import { Autoplay, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 
 const UpComing = () => {
-  const [nextMovies, setNextMovies]=useState([]);
-  const [isLoading, setLoading]=useState(true)
-  const getMovies= async () => {
-		try{
-			const response = await axios.get(`https://api.themoviedb.org/3/movie/upcoming?api_key=546c72b99cf64514c2c03c7ef473011b&language=ko`);
-			setNextMovies(response.data.results)
-			console.log(response)
-			setLoading(false)
+  const [nextMovies, setNextMovies] = useState([]);
+  const [isLoading, setLoading] = useState(true)
+  const getMovies = async () => {
+    try {
+      const response = await axios.get(`https://api.themoviedb.org/3/movie/upcoming?api_key=546c72b99cf64514c2c03c7ef473011b&language=ko`);
+      setNextMovies(response.data.results)
+      console.log(response)
+      setLoading(false)
 
-		}catch(err){
-			console.error('Error:',err);
-			setLoading(false)
-		}
-	}
-	useEffect(()=>{
-		getMovies();
-	}, [])
+    } catch (err) {
+      console.error('Error:', err);
+      setLoading(false)
+    }
+  }
+  useEffect(() => {
+    getMovies();
+  }, [])
   return (
     <div className='coming'>
-        <h2>예정작</h2>
-        {
-          isLoading ? (<div className='loding'> 로딩중... </div>) : (
-            <div className='swiper-navigation'>
-              <Swiper
+      <h2>예정작</h2>
+      {
+        isLoading ? (<div className='loding'> 로딩중... </div>) : (
+          <div className='swiper-navigation'>
+            <Swiper
               modules={[Autoplay, Navigation]}
-              spaceBetween={20}
+              spaceBetween={14}
               slidesPerView={4}
               navigation={{
-                nextEl:'.swipernext',
-                prevEl:'.swiperprev'
+                nextEl: '.swipernext',
+                prevEl: '.swiperprev'
               }}
               loop={true}
               autoplay={{
@@ -46,7 +46,7 @@ const UpComing = () => {
               }}
               breakpoints={{
                 320: {
-                  slidesPerView:2,
+                  slidesPerView: 2,
                   spaceBetween: 20,
                 },
                 640: {
@@ -63,35 +63,35 @@ const UpComing = () => {
                 },
               }}
               className='comingWrap'>
-                {
-                nextMovies.map((nextMovie, i)=> (
-                  
-              
-                    <SwiperSlide
-                      className='nextMovieWrap'
-                    >
-                      <Link to={`comming/${nextMovie.id}`}>
-                        <div className="nextMovieBox">
-                          <div className="nextMovieImg">
-                            <img src={`https://image.tmdb.org/t/p/w1280/${nextMovie.poster_path}`} alt={nextMovie.title} />
-                          </div>
-                          <div className="nextMovieText">
-                            <p>{nextMovie.title}</p>
-                            <p> {nextMovie.release_date}</p>
-                          </div>
+              {
+                nextMovies.map((nextMovie, i) => (
+
+
+                  <SwiperSlide
+                    className='nextMovieWrap'
+                  >
+                    <Link to={`comming/${nextMovie.id}`}>
+                      <div className="nextMovieBox">
+                        <div className="nextMovieImg">
+                          <img src={`https://image.tmdb.org/t/p/w1280/${nextMovie.poster_path}`} alt={nextMovie.title} />
                         </div>
-                      </Link>
-                    </SwiperSlide>
+                        <div className="nextMovieText">
+                          <p>{nextMovie.title}</p>
+                          <p className='date'> {nextMovie.release_date}</p>
+                        </div>
+                      </div>
+                    </Link>
+                  </SwiperSlide>
                 ))
-                }
-              </Swiper>
-              <div className="navigationWrap">
-                <div className="swipernext">next</div>
-                <div className="swiperprev">prev</div>
-              </div>
+              }
+            </Swiper>
+            <div className="navigationWrap">
+              <div className="swipernext">next</div>
+              <div className="swiperprev">prev</div>
             </div>
-          )
-        }
+          </div>
+        )
+      }
     </div>
   );
 };

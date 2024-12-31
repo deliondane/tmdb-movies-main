@@ -1,44 +1,62 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-// import { Link } from "react-router-dom";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
-  const [modal, setModal]=useState(false);
+  const [modal, setModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null); //클릭한 사용자 정보 저장
+
+  const userInfo = (info) => {
+    setSelectedUser(info);
+  };
 
   useEffect(() => {
-    axios.get(`https://jsonplaceholder.typicode.com/users`).then((res) => {
-      // console.log(res);
-      setUsers(res.data);
+    axios.get(`https://jsonplaceholder.typicode.com/users`).then((response) => {
+      setUsers(response.data);
     });
   }, []);
 
   return (
-    <div>
-      <h2>user List</h2>
+    <div className="users">
+      <h2>User List</h2>
       {users.map((user) => (
-        <div className="userCard">
-        {/*  <Link to={`/users/${user.id}`} className="userCard" key={user.id}>
-           {user.name}
-          </Link> */}
-          <div className="active" onClick={()=>{setModal(!modal)}}>{user.name}</div>
+        <div
+          className="userCard"
+          onClick={(e) => {
+            e.stopPropagation();
+            userInfo(user);
+          }}
+        >
+          {/* <Link to={`/users/${user.id}`}>{user.name}</Link> */}
+          <div>
+            <div
+              className="active"
+              style={{marginBottom: "20px", display: "inline-block", fontSize: "16px", cursor: "pointer"}}
+              onClick={() => {
+                setModal(!modal);
+              }}
+            >
+              {user.name}
+            </div>
+          </div>
         </div>
       ))}
-      {
-        modal===true ? <Modal users={users}/> : null
-      }
+      {modal === true ? <Modal userInfo={selectedUser} /> : null}
     </div>
   );
 };
 
-function Modal({users}){
-  return(
+function Modal({ userInfo }) {
+  return (
     <div className="modal">
-      <h4>{users.name}</h4>
-      <p>이메일:{users.name} </p>
-      <p>핸드폰: </p>
-      <p>웹사이트: </p>
+      <p className="ti">{userInfo.username}</p>
+      <p>name | {userInfo.name}</p>
+      <p>phone | {userInfo.phone}</p>
+      <p>email | {userInfo.email}</p>
+      <p>web | {userInfo.website}</p>
+      <p>zipcode | {userInfo.address.zipcode}</p>
+      <p>company | {userInfo.company.name}</p>
     </div>
-  )
+  );
 }
 export default Users;

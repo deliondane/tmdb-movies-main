@@ -1,616 +1,721 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
 
 html {
-	background-color: #000;
+  background-color: #000;
 }
 
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-family: "Noto Sans KR";
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR";
 }
 
 a {
-	text-decoration: none;
-	color: hsl(0, 0%, 13%)
+  text-decoration: none;
+  color: hsl(0, 0%, 13%);
 }
 
 ul,
 ol {
-	list-style: none;
+  list-style: none;
 }
 
 .mt30 {
-	margin-top: 30px;
+  margin-top: 30px;
 }
 
 h2 {
-	text-align: center;
-	color: #666;
-	font-size: 24px;
+  text-align: center;
+  color: #666;
+  font-size: 24px;
 }
 
 .loding {
-	width: 100%;
-	height: 90vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .star-rating {
-	color: #ff547e;
+  color: #ff547e;
 }
 
 .App {
-	>.navbar {
-		width: 100%;
-		padding: 10px 30px;
-		backdrop-filter: "saturate(180%) blur(20px)";
-		background-color: #fffa;
-		position: fixed;
-		top: 0;
-		z-index: 999;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
+  > .navbar {
+    width: 100%;
+    padding: 10px 30px;
+    backdrop-filter: "saturate(180%) blur(20px)";
+    background-color: #fffa;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
+    .logo {
+      a {
+        font-size: 30px;
+        color: rgba(0, 0, 0, 0.7);
+      }
+    }
+  }
 
-		.logo {
-			a {
-				font-size: 30px;
-				color: rgba(0, 0, 0, .7);
-			}
-		}
+  .search {
+    width: 100%;
+    padding: 50px 13%;
+    .search-box {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+	  margin-bottom: 40px;
+      input {
+        display: block; /* input을 표시 */
+        width: 70%;
+        padding: 10px;
+        border: 1px solid #ff547e;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #000;
+        &:focus {
+          outline: none;
+          border-color: #ff729e;
+          label,
+          input:not(:placeholder-shown) + label {
+            display: none;
+          }
+        }
+      }
+      input + label {
+        position: absolute; /* label을 input 위로 이동 */
+        top: 10px;
+        left: 15%;
+        transform: translateY(50%);
+        font-size: 14px;
+        pointer-events: none; /* label이 클릭 이벤트를 막지 않음 */
+      }
+      .search-btn {
+        width: auto;
+        height: auto;
+        background: none;
+        border: none;
+        margin-left: 12px;
+        font-size: 28px;
+        font-weight: bold;
+        color: #ff547e;
+      }
+    }
+    .search-result {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      .search-movieList {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+        width: 100%;
+        li {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .serch-list {
+            width: 180px;
+            text-align: center;
+            .img {
+              width: 100%;
+              height: 300px;
+              overflow: hidden;
+              img {
+                width: 100%;
+                height: 300px;
+                object-fit: cover;
+                border-radius: 5px;
+              }
+            }
+            .info {
+              margin-top: 10px;
+              .title {
+                font-size: 16px;
+                font-weight: bold;
+                color: #fff;
+              }
+              .release {
+                font-size: 14px;
+                color: #aaa;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
-		.search {
-			width: 40px;
-			height: 40px;
-			display: flex;
-			align-items: center;
-			border: 1px solid #999;
-			border-radius: 8px;
-			overflow: hidden;
-			transition: width 0.3s ease;
-			/* 너비 변경 애니메이션 */
+  .home {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
-			input {
-				height: 38px;
-				padding: 0;
-				width: 0;
-				opacity: 0;
-				border: 0;
-				visibility: hidden;
-				font-size: 13px;
-				transition: width 0.3s ease, opacity 0.3s ease;
-				background-color: transparent;
-			}
+    .upComing {
+      position: relative;
 
-			&.active {
-				width: 250px;
-				border-color: #222;
-				/* 활성화 시 너비 */
+      .upMovie {
+        display: flex;
+        flex-direction: row-reverse;
 
-				input {
-					padding: 0 4px 2px 16px;
-					opacity: 1;
-					visibility: visible;
-					flex: 1;
-				}
-			}
+        .upComingImg {
+          width: 60%;
+          overflow: hidden;
 
-			.search-btn {
-				width: 40px;
-				height: 40px;
-				background: url('../public/images/header_menu1.png') no-repeat center center;
-				background-size: 45%;
-				border: none;
-				cursor: pointer;
-			}
-		}
+          img {
+            display: block;
+            object-fit: cover;
+          }
+        }
 
-	}
+        .upComingInfo {
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          background: rgb(0, 0, 0);
+          background: linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 1) 0%,
+            rgba(0, 0, 0, 1) 40%,
+            rgba(0, 0, 0, 0.9010197829131653) 49%,
+            rgba(0, 0, 0, 0.31838672969187676) 57%,
+            rgba(0, 0, 0, 0.5312718837535014) 77%,
+            rgba(0, 0, 0, 1) 90%
+          );
+        }
 
-	.home {
-		width: 100%;
-		height: 100%;
-		display: flex;
-		flex-direction: column;
+        .upInfoText {
+          width: 40%;
+          position: absolute;
+          left: 13%;
+          bottom: 18%;
+          color: #fff;
+          z-index: 7;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
 
-		.upComing {
-			position: relative;
+          .top {
+            .original_title {
+              font-size: 48px;
+              margin-bottom: 10px;
+              font-weight: 600;
+            }
 
-			.upMovie {
-				display: flex;
-				flex-direction: row-reverse;
+            .title {
+              font-size: 16px;
+              color: #999;
+            }
+          }
 
-				.upComingImg {
-					width: 60%;
-					overflow: hidden;
+          .trailer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            height: 10%;
 
-					img {
-						display: block;
-						object-fit: cover;
-					}
-				}
+            a {
+              padding: 5px 5px;
+              display: inline-block;
+              font-size: 16px;
+              color: #fff;
+            }
 
-				.upComingInfo {
-					position: absolute;
-					height: 100%;
-					width: 100%;
-					background: rgb(0, 0, 0);
-					background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 40%, rgba(0, 0, 0, 0.9010197829131653) 49%, rgba(0, 0, 0, 0.31838672969187676) 57%, rgba(0, 0, 0, 0.5312718837535014) 77%, rgba(0, 0, 0, 1) 90%);
-				}
+            &:hover {
+              color: #ff547e;
 
-				.upInfoText {
-					width: 40%;
-					position: absolute;
-					left: 13%;
-					bottom: 18%;
-					color: #fff;
-					z-index: 7;
-					display: flex;
-					flex-direction: column;
-					gap: 8px;
+              a {
+                color: #ff547e;
+              }
+            }
+          }
 
-					.top {
-						.original_title {
-							font-size: 48px;
-							margin-bottom: 10px;
-							font-weight: 600;
-						}
+          .overview {
+            font-size: 16px;
+            color: #eee;
+          }
 
-						.title {
-							font-size: 16px;
-							color: #999;
-						}
-					}
+          .bottom {
+            display: flex;
+            gap: 8px;
+            font-size: 16px;
 
-					.trailer {
-						display: flex;
-						align-items: center;
-						gap: 8px;
-						height: 10%;
+            .star-rating {
+              color: #ff547e;
+            }
 
-						a {
-							padding: 5px 5px;
-							display: inline-block;
-							font-size: 16px;
-							color: #fff;
-						}
+            .vote {
+            }
 
-						&:hover {
-							color: #ff547e;
-
-							a {
-								color: #ff547e;
-							}
-						}
-					}
-
-					.overview {
-						font-size: 16px;
-						color: #eee;
-					}
-
-					.bottom {
-						display: flex;
-						gap: 8px;
-						font-size: 16px;
-
-						.star-rating {
-							color: #ff547e;
-						}
-
-						.vote {}
-
-						.date {
-							margin-left: 8px;
-						}
-					}
-				}
-			}
-		}
-	}
+            .date {
+              margin-left: 8px;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .mainContainer {
-	width: 100%;
-	background-color: #111;
-	padding: 20px 13%;
+  width: 100%;
+  background-color: #111;
+  padding: 20px 13%;
 
-	.tit_more {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
+  .tit_more {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-		h2 {
-			color: #fff;
-			padding: 12px 0;
-			text-align: left;
-		}
+    h2 {
+      color: #fff;
+      padding: 12px 0;
+      text-align: left;
+    }
 
-		.more {
-			padding: 20px 0;
-			text-align: center;
+    .more {
+      padding: 20px 0;
+      text-align: center;
 
-			.theMore {
-				padding: 10px 20px;
-				border: none;
-				color: #fff;
-				background-color: transparent;
+      .theMore {
+        padding: 10px 20px;
+        border: none;
+        color: #fff;
+        background-color: transparent;
 
-				&:hover {
-					color: #ff547e;
-				}
-			}
-		}
+        &:hover {
+          color: #ff547e;
+        }
+      }
+    }
+  }
 
-	}
+  .mainMovie {
+    overflow-y: auto;
+    height: auto;
 
-	.mainMovie {
-		overflow-y: auto;
-		height: auto;
+    .movie {
+      display: flex;
+      width: max-content;
+      gap: 0.8rem;
+      margin: 20px 0 32px;
 
-		.movie {
-			display: flex;
-			width: max-content;
-			gap: .8rem;
-			margin: 20px 0 32px;
+      .aMovie {
+        .aMovie-card {
+          .aMovieimgBox {
+            padding-bottom: 0.5rem;
+            flex: 1 1 0%;
 
-			.aMovie {
+            img {
+              width: 15rem;
+              height: 350px;
+            }
+          }
 
-				.aMovie-card {
+          .aMovieInfo {
+            color: #fff;
 
-					.aMovieimgBox {
-						padding-bottom: .5rem;
-						flex: 1 1 0%;
+            .aMovieTitle {
+              text-align: left;
+              color: #fff;
+              font-size: 14px;
+              line-height: 1.25rem;
+            }
 
-						img {
-							width: 15rem;
-							height: 350px;
-						}
-					}
+            .aMovieflex {
+              display: flex;
+              align-items: center;
+              gap: 10px;
+            }
 
-					.aMovieInfo {
-						color: #fff;
-
-						.aMovieTitle {
-							text-align: left;
-							color: #fff;
-							font-size: 14px;
-							line-height: 1.25rem;
-						}
-
-						.aMovieflex {
-							display: flex;
-							align-items: center;
-							gap: 10px;
-						}
-
-						p {
-							margin-top: 3px;
-							font-size: 13px;
-						}
-
-					}
-				}
-			}
-		}
-
-
-	}
+            p {
+              margin-top: 3px;
+              font-size: 13px;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .movi_movie {
-	width: 100%;
-	background-color: #000;
+  width: 100%;
+  background-color: #000;
+  margin-top: 50px;
 
-	.movieBox {
-		text-align: center;
-		width: 100%;
+  .movieBox {
+    text-align: center;
+    width: 100%;
 
-		img {
-			@media screen and (min-width: 1200px) {
-				width: 70%;
-			}
+    img {
+      @media screen and (min-width: 1200px) {
+        width: 70%;
+      }
 
-			@media screen and (max-width: 1199px) {
-				width: 80%;
-			}
+      @media screen and (max-width: 1199px) {
+        width: 80%;
+      }
 
-			@media screen and (max-width: 900px) {
-				width: 80%;
-			}
+      @media screen and (max-width: 900px) {
+        width: 80%;
+      }
 
-			@media screen and (max-width: 720px) {
-				width: 100%;
-				padding: 0 20px;
-			}
-		}
-	}
+      @media screen and (max-width: 720px) {
+        width: 100%;
+        padding: 0 20px;
+      }
+    }
+  }
 
-	.textBox {
-		padding: 30px 0 0;
+  .textBox {
+    padding: 30px 0 0;
 
-		@media screen and (min-width: 1200px) {
-			width: 70%;
-			margin: 0 auto;
-		}
+    @media screen and (min-width: 1200px) {
+      width: 70%;
+      margin: 0 auto;
+    }
 
-		@media screen and (max-width:1199px) {
-			width: 80%;
-			margin: 0 auto;
-		}
+    @media screen and (max-width: 1199px) {
+      width: 80%;
+      margin: 0 auto;
+    }
 
-		@media screen and (max-width: 900px) {
-			width: 80%;
-			margin: 0 auto;
-		}
+    @media screen and (max-width: 900px) {
+      width: 80%;
+      margin: 0 auto;
+    }
 
-		@media screen and (max-width: 720px) {
-			width: 100%;
-			padding: 0 20px;
-			background: bule;
-			margin: 0 auto;
-		}
+    @media screen and (max-width: 720px) {
+      width: 100%;
+      padding: 0 20px;
+      background: bule;
+      margin: 0 auto;
+    }
 
-		.textBoxTitle {
-			font-size: 24px;
-			font-weight: 600;
-			color: #ff547e;
-		}
+    .textBoxTitle {
+      font-size: 24px;
+      font-weight: 600;
+      color: #ff547e;
+    }
 
-		.textBoxOriginalTitle {
-			font-size: 18px;
-			color: #fffa;
-			padding: 10px 0;
-		}
+    .textBoxOriginalTitle {
+      font-size: 18px;
+      color: #fffa;
+      padding: 10px 0;
+    }
 
-		.textBoxOverview {
-			margin-top: 20px;
-			font-size: 14px;
-			color: #fff;
-		}
+    .textBoxOverview {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #fff;
+    }
 
-		.textBoxGenres {
-			margin-top: 10px;
-			display: flex;
-			color: #ff547e;
+    .textBoxGenres {
+      margin-top: 10px;
+      display: flex;
+      color: #ff547e;
 
-			span {
-				display: block;
-				padding-right: 20px;
-				font-size: 14px;
-				position: relative;
+      span {
+        display: block;
+        padding-right: 20px;
+        font-size: 14px;
+        position: relative;
 
-				&:not(:last-child):after {
-					position: absolute;
-					content: "";
-					top: 5px;
-					right: 10px;
-					width: 1px;
-					height: 10px;
-					background: #fff;
-				}
-			}
-		}
+        &:not(:last-child):after {
+          position: absolute;
+          content: "";
+          top: 5px;
+          right: 10px;
+          width: 1px;
+          height: 10px;
+          background: #fff;
+        }
+      }
+    }
 
-		.textBoxDate {
-			margin-top: 12px;
-			position: relative;
-			font-size: 13px;
-			color: #fff;
+    .textBoxDate {
+      margin-top: 12px;
+      position: relative;
+      font-size: 13px;
+      color: #fff;
 
-			&::before {
-				content: "개봉일 :       ";
-				color: #fff;
+      &::before {
+        content: "개봉일 :       ";
+        color: #fff;
+      }
+    }
 
-			}
+    .textBoxAverage {
+      display: flex;
+      margin-top: 10px;
+      color: #fff;
 
-		}
+      span {
+        color: #ff547e;
+      }
 
-		.textBoxAverage {
-			display: flex;
-			margin-top: 10px;
-			color: #fff;
-
-			span {
-				color: #ff547e;
-			}
-
-			p {
-				margin-left: 5px;
-			}
-		}
-	}
+      p {
+        margin-left: 5px;
+      }
+    }
+  }
 }
 
 .movies {
-	padding: 50px;
+  padding: 50px 13%;
 
-	h1 {
-		text-align: center;
-		font-size: 24px;
-		margin-bottom: 20px;
-		color: #666
-	}
+  h1 {
+    text-align: left;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #ff547e;
+  }
 
-	.moviesMovie {
-		display: flex;
-		border: 1px solid #ddd;
-		padding: 5px;
-		margin-bottom: 10px;
-		justify-content: space-between;
-		align-items: center;
+  .moviesMovie {
+    display: flex;
+    border: 1px solid #ff547e;
+	border-radius: 5px;
+    background-color: #000;
+    padding:  8px 10px;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    align-items: center;
+	color: #ccc;
 
-		.movie-title {
-			font-size: 14px;
+    .movie-title {
+      font-size: 14px;
+    }
+	
+    .movie-year {
+		font-size: 12px;
+		font-weight: 300;
+    }
+
+    .removeBtn {
+      button {
+        background: none;
+        color: #fff;
+        border: none;
+		border-radius: 3px;
+        padding: 5px 20px;
+		&:hover{
+			background-color: #ff547e;
 		}
+      }
+    }
+  }
 
-		.movie-year {
-			font-size: 12px;
-			color: #f00;
-		}
+  form {
+    width: 100%;
 
-		.removeBtn {
-			button {
-				background: #b51212;
-				color: #fff;
-				border: none;
-				padding: 5px 20px;
-			}
-		}
-	}
+	input {
+        display: block; /* input을 표시 */
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ff547e;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #000;
+        &:focus {
+          outline: none;
+          border-color: #ff729e;
+        }
+      }
 
-	form {
-		width: 100%;
+    .error {
+      font-size: 12px;
+      color: #ff547e;
+	  margin-bottom: 10px;
+    }
 
-		input {
-			width: 100%;
-			margin-bottom: 10px;
-			padding: 10px;
-		}
-
-		.error {
-			font-size: 12px;
-			color: #f00;
-		}
-
-		button {
-			width: 100%;
-			padding: 5px 20px;
-			background: #666;
-			color: #fff;
-			border: none;
-			border-radius: 3px;
-			margin-bottom: 30px;
-		}
-	}
+    button {
+      width: 100%;
+      padding: 10px 20px;
+      background: #ff547e;
+      color: #000;
+      border: none;
+      border-radius: 3px;
+      margin-bottom: 30px;
+    }
+  }
 }
 
 .coming {
-	padding: 20px 13%;
-	background-color: #000;
+  padding: 20px 13%;
+  background-color: #000;
 
-	h2 {
-		color: #fff;
-		padding: 12px 0;
-		text-align: left;
-	}
+  h2 {
+    color: #fff;
+    padding: 12px 0;
+    text-align: left;
+  }
 
-	.swiper-navigation {
-		max-width: 1280px;
-		width: 100%;
-		margin: 30px auto 100px;
-		position: relative;
+  .swiper-navigation {
+    max-width: 1280px;
+    width: 100%;
+    margin: 30px auto 100px;
+    position: relative;
 
-		.comingWrap {
-			width: 100%;
+    .comingWrap {
+      width: 100%;
 
-			.nextMovieWrap {
-				a {
-					.nextMovieBox {
-						width: 100%;
-						height: auto;
+      .nextMovieWrap {
+        a {
+          .nextMovieBox {
+            width: 100%;
+            height: auto;
 
-						.nextMovieImg {
-							height: 350px;
-							overflow: hidden;
+            .nextMovieImg {
+              height: 350px;
+              overflow: hidden;
 
-							img {
-								width: 100%;
-								height: 100%;
-								object-fit: cover;
-							}
-						}
+              img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+              }
+            }
 
-						.nextMovieText {
-							p {
-								color: #fff;
-							}
+            .nextMovieText {
+              p {
+                color: #fff;
+              }
 
-							p.date {
-								margin-top: 3px;
-								font-size: 13px;
-							}
-						}
-					}
-				}
-			}
-		}
+              p.date {
+                margin-top: 3px;
+                font-size: 13px;
+              }
+            }
+          }
+        }
+      }
+    }
 
-		.swipernext {
-			position: absolute;
-			right: -50px;
-			top: 40%;
+    .swipernext {
+      position: absolute;
+      right: -50px;
+      top: 40%;
 
-			@media screen and (max-width: 1340px) {
-				right: 10px;
-				z-index: 30;
-				color: #fff;
-				text-shadow: 2px 2px 5px #000;
-			}
-		}
+      @media screen and (max-width: 1340px) {
+        right: 10px;
+        z-index: 30;
+        color: #fff;
+        text-shadow: 2px 2px 5px #000;
+      }
+    }
 
-		.swiperprev {
-			position: absolute;
-			left: -50px;
-			top: 40%;
+    .swiperprev {
+      position: absolute;
+      left: -50px;
+      top: 40%;
 
-			@media screen and (max-width: 1340px) {
-				left: 10px;
-				z-index: 30;
-				color: #fff;
-				text-shadow: 2px 2px 5px #000;
-			}
-		}
-	}
+      @media screen and (max-width: 1340px) {
+        left: 10px;
+        z-index: 30;
+        color: #fff;
+        text-shadow: 2px 2px 5px #000;
+      }
+    }
+  }
 }
 
+.modal {
+  width: 500px;
+  height: auto;
+  background: #ff547f4b;
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  padding: 30px;
+  box-shadow: 5px 5px 10px #000;
+  p.ti {
+    font-size: 20px;
+    color: #ff547e;
+  }
+  p {
+    margin-bottom: 10px;
+  }
+}
+
+.users {
+  width: 100%;
+  padding: 50px 13%;
+  color: #fff;
+  h2 {
+    color: #ff547e;
+    text-align: left;
+    margin-bottom: 20px;
+    font-size: 24px;
+    .userCard {
+      display: inline-block;
+      div {
+        .active {
+          padding: 20px 0;
+        }
+      }
+    }
+  }
+}
 .footer {
-	width: 100%;
-	background: #111;
-	padding: 16px;
-	display: flex;
-	justify-content: center;
-	position: fixed;
-	bottom: 0;
-	z-index: 9;
+  width: 100%;
+  background: #111;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  z-index: 9;
 
-	.footerInner {
-		ul {
-			display: flex;
+  .footerInner {
+    ul {
+      display: flex;
 
-			li {
-				a {
-					font-size: 25px;
-					padding: 20px 10px;
-					margin: 0 40px;
-					color: #fff;
-				}
-			}
-		}
-	}
+      li {
+        a {
+          font-size: 25px;
+          padding: 20px 10px;
+          margin: 0 40px;
+          color: #fff;
+		  &:nth-child(2){
+			font-size: 27px;
+		  }
+        }
+      }
+    }
+  }
 }
 
 .quickBtn {
-	position: fixed;
-	right: 20px;
-	bottom: 14%;
-	z-index: 100;
+  position: fixed;
+  right: 20px;
+  bottom: 14%;
+  z-index: 100;
 
-	.quick-top {
-		width: 56px;
-		height: 56px;
-		border-radius: 50%;
-		background: #022426;
-		cursor: pointer;
+  .quick-top {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #022426;
+    cursor: pointer;
 
-		.upArrowBtn {
-			color: #fff;
-			font-size: 35px;
-		}
-	}
+    .upArrowBtn {
+      color: #fff;
+      font-size: 35px;
+    }
+  }
 }

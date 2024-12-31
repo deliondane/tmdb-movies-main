@@ -11,6 +11,7 @@ import Movie from './pages/Movie';
 import Comming from './pages/Comming';
 import SearchDetail from './pages/SearchDetail';
 import QuickBtn from './components/QuickBtn';
+import Search from './components/Search.jsx';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
 				<Route path="/users/:id" element={<User />} />
 				<Route path="/event" element={<Event />} />
 				<Route path="/search/:movieId" element={<SearchDetail />} />
+				<Route path="/search" element={<Search />} />
 			</Routes>
 			<QuickBtn />
 		</div>
